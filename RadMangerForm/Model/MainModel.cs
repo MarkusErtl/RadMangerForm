@@ -29,13 +29,13 @@ namespace RadMangerForm.Model
             string idsString = string.Join(",", ids);                                               // merge all List IDs
 
             string query = $"DELETE FROM {tableName} WHERE Id IN ({idsString})";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))     
             {
-                connection.Open();
+                connection.Open();                                                                  // Verbindung aufbauen     
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand(query, connection))                      // Send SQL Command
                 {
-                    int rowsAffected = command.ExecuteNonQuery();
+                    int rowsAffected = command.ExecuteNonQuery();                                   // Executes and returns how many rows are effected
                     Console.WriteLine($"{rowsAffected} rows were deleted.");
                 }
             }
