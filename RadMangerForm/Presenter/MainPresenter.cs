@@ -29,8 +29,9 @@ namespace RadMangerForm.Presenter
        
         private void OnLoadButtonClicked(object sender, EventArgs e)
         {
-            // Do something
-          //  _mainModel.LoadButtonClicked();
+            //Laden aller Daten zum hineinladen in die ListBox
+                       
+             //  _mainModel.LoadButtonClicked();
         }   
 
 
