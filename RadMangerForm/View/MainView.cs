@@ -14,6 +14,7 @@ namespace RadMangerForm.View
     {
 
         public event EventHandler<EventArgs> SearchButtonClicked;
+        public event EventHandler<EventArgs> LoadButtonClicked;
 
         public MainView()
         {
@@ -25,9 +26,9 @@ namespace RadMangerForm.View
             SearchButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
-
-
-
-
+        private void OnLoadBtn_Clicked(object sender, EventArgs e)
+        {
+            LoadButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

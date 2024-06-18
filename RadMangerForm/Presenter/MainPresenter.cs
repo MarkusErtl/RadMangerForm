@@ -25,9 +25,13 @@ namespace RadMangerForm.Presenter
             // Do something
             _mainModel.SearchButtonClicked();
 
-        }   
-
+        }  
        
+        private void OnLoadButtonClicked(object sender, EventArgs e)
+        {
+            // Do something
+          //  _mainModel.LoadButtonClicked();
+        }   
 
 
 

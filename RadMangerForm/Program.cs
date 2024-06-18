@@ -20,7 +20,7 @@ namespace RadMangerForm
 
             InsertData(command);
 
-
+            connection.Close();
 
 
             // To customize application configuration such as set high DPI settings or default font,
@@ -32,7 +32,7 @@ namespace RadMangerForm
 
 
         public static void InsertData(MySqlCommand command)
-        {                      
+        {                     
 
                 // Daten löschen
                 command.CommandText = @"
