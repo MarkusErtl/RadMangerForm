@@ -74,7 +74,11 @@ namespace RadMangerForm.View
                 txtLänge.Text = strecke.Länge.ToString();
                 txtDauer.Text = strecke.Dauer.ToString();
                 txtSchwier.Text = strecke.Schwierigkeitsgrad.ToString();
-                combBoxBundes.SelectedValue = strecke.BundeslandID;
+                if(strecke.BundeslandID.HasValue)
+                {
+                    combBoxBundes.SelectedValue = strecke.BundeslandID;
+                }
+                
             }
         }
 

@@ -206,10 +206,7 @@ namespace RadMangerForm.Model
                 // Verbindung schließen
                 connection.Close();
             }
-            else
-            {
-                MessageBox.Show("Bitte wählen Sie eine Strecke aus.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         public List<Bundesland> GetBundesländer()

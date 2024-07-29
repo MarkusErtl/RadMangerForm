@@ -32,6 +32,7 @@ namespace RadMangerForm.View
         public MainView()
         {
             InitializeComponent();
+            dataGrdViewStrecken.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
         private void OnEditBtn_Clicked(object sender, EventArgs e)
@@ -56,42 +57,75 @@ namespace RadMangerForm.View
             DeleteButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
-        public void UpdateStreckenList(List<Strecke> strecken)
-        {
-            listBoxStrecken.Items.Clear();
-            foreach (var strecke in strecken)
-            {
-                listBoxStrecken.Items.Add(strecke);
-            }
-        }
-
         //public void UpdateStreckenList(List<Strecke> strecken)
         //{
-        //    // Annahme: Ihre DataGridView heißt dataGridViewStrecken
-        //    dataGridViewStrecken.Rows.Clear();
-        //    dataGridViewStrecken.Columns.Clear();
-
-        //    // Spalten hinzufügen
-        //    dataGridViewStrecken.Columns.Add("Name", "Name");
-        //    dataGridViewStrecken.Columns.Add("Entfernung", "Entfernung");
-        //    dataGridViewStrecken.Columns.Add("Schwierigkeit", "Schwierigkeit");
-
-        //    // Daten hinzufügen
+        //    listBoxStrecken.Items.Clear();
         //    foreach (var strecke in strecken)
         //    {
-        //        dataGridViewStrecken.Rows.Add(strecke.Name, strecke.Entfernung, strecke.Schwierigkeit);
+        //        listBoxStrecken.Items.Add(strecke);
         //    }
         //}
+
+        public void UpdateStreckenList(List<Strecke> strecken)
+        {
+
+            // Annahme: Ihre DataGridView heißt dataGridViewStrecken
+            dataGrdViewStrecken.Rows.Clear();
+            dataGrdViewStrecken.Columns.Clear();
+
+            // Spalten hinzufügen
+            dataGrdViewStrecken.Columns.Add("ID", "ID");
+            dataGrdViewStrecken.Columns.Add("Name", "Name");
+            dataGrdViewStrecken.Columns.Add("Entfernung", "Entfernung");
+            dataGrdViewStrecken.Columns.Add("Schwierigkeit", "Schwierigkeit");
+            
+
+            // Daten hinzufügen
+            foreach (var strecke in strecken)
+            {
+                dataGrdViewStrecken.Rows.Add(strecke.StreckenID,strecke.Name, strecke.Länge, strecke.Schwierigkeitsgrad);
+            }
+        }
 
         private void btn_details_Click(object sender, EventArgs e)
         {
             DetailButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
-
-        public Strecke GetSelectedStrecke()
+        /// <summary>
+        /// Methode um die ausgewählte Strecke aus dem DataGridView zu holen
+        /// </summary>
+        /// <returns></returns>
+        public Strecke GetSelectedStrecke() 
         {
-            return listBoxStrecken.SelectedItem as Strecke;
+            if (dataGrdViewStrecken.SelectedRows.Count == 0)
+            {
+                return null;
+            }
+
+            DataGridViewRow selectedRow = dataGrdViewStrecken.SelectedRows[0];
+
+            string strecknID = selectedRow.Cells["ID"].Value.ToString();    
+            string name = selectedRow.Cells["Name"].Value.ToString();
+            string entfernung = selectedRow.Cells["Entfernung"].Value.ToString();
+            int schwierigkeit = Convert.ToInt32(selectedRow.Cells["Schwierigkeit"].Value);
+            //TimeSpan dauer = TimeSpan.Zero;
+            //if (selectedRow.Cells["Dauer"].Value != null && TimeSpan.TryParse(selectedRow.Cells["Dauer"].Value.ToString(), out TimeSpan parsedDauer))
+            //{
+            //    dauer = parsedDauer;
+            //}
+
+
+            Strecke selectedStrecke = new Strecke
+            {
+                StreckenID = Convert.ToInt32(strecknID),
+                Name = name,
+                Länge = Convert.ToInt32(entfernung),
+                Schwierigkeitsgrad = schwierigkeit,
+                //Dauer = dauer
+            };
+
+            return selectedStrecke;
         }
 
         public void ShowStreckeDetails(Strecke strecke)
@@ -114,6 +148,11 @@ namespace RadMangerForm.View
         }
 
         private void dataGrdViewStrecken_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGrdViewStrecken_SelectionChanged(object sender, EventArgs e)
         {
 
         }

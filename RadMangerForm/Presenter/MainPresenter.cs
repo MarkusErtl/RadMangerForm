@@ -29,6 +29,7 @@ namespace RadMangerForm.Presenter
         {
             Strecke selectedStrecke = _mainView.GetSelectedStrecke();
 
+
             if (selectedStrecke != null)
             {
                 _mainModel.DeleteStrecke(selectedStrecke.StreckenID);

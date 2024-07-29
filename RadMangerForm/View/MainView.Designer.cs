@@ -28,7 +28,6 @@
         {
             components = new System.ComponentModel.Container();
             btn_Search = new Button();
-            listBoxStrecken = new ListBox();
             btn_loadData = new Button();
             btn_edit = new Button();
             btn_delete = new Button();
@@ -41,22 +40,13 @@
             // 
             // btn_Search
             // 
-            btn_Search.Location = new Point(785, 158);
+            btn_Search.Location = new Point(361, 21);
             btn_Search.Name = "btn_Search";
             btn_Search.Size = new Size(85, 39);
             btn_Search.TabIndex = 0;
             btn_Search.Text = "Search";
             btn_Search.UseVisualStyleBackColor = true;
             btn_Search.Click += OnSearchBtn_Clicked;
-            // 
-            // listBoxStrecken
-            // 
-            listBoxStrecken.FormattingEnabled = true;
-            listBoxStrecken.ItemHeight = 15;
-            listBoxStrecken.Location = new Point(54, 86);
-            listBoxStrecken.Name = "listBoxStrecken";
-            listBoxStrecken.Size = new Size(499, 139);
-            listBoxStrecken.TabIndex = 1;
             // 
             // btn_loadData
             // 
@@ -70,7 +60,7 @@
             // 
             // btn_edit
             // 
-            btn_edit.Location = new Point(559, 132);
+            btn_edit.Location = new Point(465, 121);
             btn_edit.Name = "btn_edit";
             btn_edit.Size = new Size(85, 40);
             btn_edit.TabIndex = 3;
@@ -81,7 +71,7 @@
             // btn_delete
             // 
             btn_delete.CausesValidation = false;
-            btn_delete.Location = new Point(559, 178);
+            btn_delete.Location = new Point(465, 167);
             btn_delete.Name = "btn_delete";
             btn_delete.Size = new Size(85, 40);
             btn_delete.TabIndex = 4;
@@ -91,7 +81,7 @@
             // 
             // btn_details
             // 
-            btn_details.Location = new Point(465, 231);
+            btn_details.Location = new Point(358, 374);
             btn_details.Name = "btn_details";
             btn_details.Size = new Size(88, 37);
             btn_details.TabIndex = 5;
@@ -106,7 +96,7 @@
             // 
             // btn_Add
             // 
-            btn_Add.Location = new Point(559, 86);
+            btn_Add.Location = new Point(465, 75);
             btn_Add.Name = "btn_Add";
             btn_Add.Size = new Size(85, 40);
             btn_Add.TabIndex = 6;
@@ -117,24 +107,24 @@
             // dataGrdViewStrecken
             // 
             dataGrdViewStrecken.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGrdViewStrecken.Location = new Point(54, 258);
+            dataGrdViewStrecken.Location = new Point(54, 75);
             dataGrdViewStrecken.Name = "dataGrdViewStrecken";
-            dataGrdViewStrecken.Size = new Size(286, 164);
+            dataGrdViewStrecken.Size = new Size(392, 284);
             dataGrdViewStrecken.TabIndex = 7;
             dataGrdViewStrecken.CellContentClick += dataGrdViewStrecken_CellContentClick;
+            dataGrdViewStrecken.SelectionChanged += dataGrdViewStrecken_SelectionChanged;
             // 
             // MainView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(954, 454);
+            ClientSize = new Size(646, 454);
             Controls.Add(dataGrdViewStrecken);
             Controls.Add(btn_Add);
             Controls.Add(btn_details);
             Controls.Add(btn_delete);
             Controls.Add(btn_edit);
             Controls.Add(btn_loadData);
-            Controls.Add(listBoxStrecken);
             Controls.Add(btn_Search);
             Name = "MainView";
             Text = "MainView";
@@ -145,7 +135,6 @@
         #endregion
 
         private Button btn_Search;
-        private ListBox listBoxStrecken;
         private Button btn_loadData;
         private Button btn_edit;
         private Button btn_delete;
