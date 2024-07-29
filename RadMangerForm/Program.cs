@@ -1,9 +1,11 @@
 using RadMangerForm.View;
 using MySql.Data.MySqlClient;
+using RadMangerForm.Model;
+using RadMangerForm.Presenter;
 
 namespace RadMangerForm
 {
-    internal static class Program
+   static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -18,7 +20,7 @@ namespace RadMangerForm
 
             MySqlCommand command = connection.CreateCommand();
 
-            InsertData(command);
+            //InsertData(command);
 
             connection.Close();
 
@@ -26,14 +28,22 @@ namespace RadMangerForm
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainView());  
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            MainModel mainModel = new MainModel();
+            MainView mainView = new MainView();
+            MainPresenter mainPresenter = new MainPresenter(mainView, mainModel);
+
+
+            Application.Run(mainView);  
 
         }
 
 
         public static void InsertData(MySqlCommand command)
-        {                     
-
+        {   
                 // Daten löschen
                 command.CommandText = @"
                     DELETE FROM ZOT_Strecke_Trinkbrunnen;
@@ -64,10 +74,10 @@ namespace RadMangerForm
                     (2, 'Rennrad', 'Giant', '2021', 1500.75),
                     (3, 'Trekkingrad', 'Trek', '2023', 900.00);
 
-                    INSERT INTO Strecken (StreckenID, Name, Länge, Dauer, Schwierigkeitsgrad, TrinkbrunnenID, BelagID) VALUES
-                    (1, 'Alpenroute', 120, '05:30:00', 5, 1, 1),
-                    (2, 'City Tour', 20, '01:00:00', 2, 2, 2),
-                    (3, 'Rheinradweg', 150, '07:45:00', 3, 3, 3);
+                    INSERT INTO Strecken (StreckenID, Name, Länge, Dauer, Schwierigkeitsgrad, TrinkbrunnenID, BelagID, BundeslandID) VALUES
+                    (1, 'Alpenroute -', 120, '05:30:00', 5, 1, 1, 1),
+                    (2, 'City Tour  -', 20, '01:00:00', 2, 2, 2, 2),
+                    (3, 'Rheinradweg -', 150, '07:45:00', 3, 3, 3,3);
 
                     INSERT INTO Belag (BelagID, Name, Zustand) VALUES
                     (1, 'Asphalt', 'Gut'),

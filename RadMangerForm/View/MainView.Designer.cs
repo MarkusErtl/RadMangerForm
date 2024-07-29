@@ -26,16 +26,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             btn_Search = new Button();
-            listBox1 = new ListBox();
+            listBoxStrecken = new ListBox();
             btn_loadData = new Button();
             btn_edit = new Button();
             btn_delete = new Button();
+            btn_details = new Button();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            btn_Add = new Button();
+            dataGrdViewStrecken = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGrdViewStrecken).BeginInit();
             SuspendLayout();
             // 
             // btn_Search
             // 
-            btn_Search.Location = new Point(758, 175);
+            btn_Search.Location = new Point(785, 158);
             btn_Search.Name = "btn_Search";
             btn_Search.Size = new Size(85, 39);
             btn_Search.TabIndex = 0;
@@ -43,14 +49,14 @@
             btn_Search.UseVisualStyleBackColor = true;
             btn_Search.Click += OnSearchBtn_Clicked;
             // 
-            // listBox1
+            // listBoxStrecken
             // 
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(54, 86);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(499, 139);
-            listBox1.TabIndex = 1;
+            listBoxStrecken.FormattingEnabled = true;
+            listBoxStrecken.ItemHeight = 15;
+            listBoxStrecken.Location = new Point(54, 86);
+            listBoxStrecken.Name = "listBoxStrecken";
+            listBoxStrecken.Size = new Size(499, 139);
+            listBoxStrecken.TabIndex = 1;
             // 
             // btn_loadData
             // 
@@ -64,9 +70,9 @@
             // 
             // btn_edit
             // 
-            btn_edit.Location = new Point(758, 75);
+            btn_edit.Location = new Point(559, 132);
             btn_edit.Name = "btn_edit";
-            btn_edit.Size = new Size(85, 37);
+            btn_edit.Size = new Size(85, 40);
             btn_edit.TabIndex = 3;
             btn_edit.Text = "Edit";
             btn_edit.UseVisualStyleBackColor = true;
@@ -75,7 +81,7 @@
             // btn_delete
             // 
             btn_delete.CausesValidation = false;
-            btn_delete.Location = new Point(758, 118);
+            btn_delete.Location = new Point(559, 178);
             btn_delete.Name = "btn_delete";
             btn_delete.Size = new Size(85, 40);
             btn_delete.TabIndex = 4;
@@ -83,27 +89,69 @@
             btn_delete.UseVisualStyleBackColor = true;
             btn_delete.Click += btn_delete_Click;
             // 
+            // btn_details
+            // 
+            btn_details.Location = new Point(465, 231);
+            btn_details.Name = "btn_details";
+            btn_details.Size = new Size(88, 37);
+            btn_details.TabIndex = 5;
+            btn_details.Text = "Details";
+            btn_details.UseVisualStyleBackColor = true;
+            btn_details.Click += btn_details_Click;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
+            // btn_Add
+            // 
+            btn_Add.Location = new Point(559, 86);
+            btn_Add.Name = "btn_Add";
+            btn_Add.Size = new Size(85, 40);
+            btn_Add.TabIndex = 6;
+            btn_Add.Text = "Add";
+            btn_Add.UseVisualStyleBackColor = true;
+            btn_Add.Click += btn_Add_Click;
+            // 
+            // dataGrdViewStrecken
+            // 
+            dataGrdViewStrecken.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGrdViewStrecken.Location = new Point(54, 258);
+            dataGrdViewStrecken.Name = "dataGrdViewStrecken";
+            dataGrdViewStrecken.Size = new Size(286, 164);
+            dataGrdViewStrecken.TabIndex = 7;
+            dataGrdViewStrecken.CellContentClick += dataGrdViewStrecken_CellContentClick;
+            // 
             // MainView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(954, 454);
+            Controls.Add(dataGrdViewStrecken);
+            Controls.Add(btn_Add);
+            Controls.Add(btn_details);
             Controls.Add(btn_delete);
             Controls.Add(btn_edit);
             Controls.Add(btn_loadData);
-            Controls.Add(listBox1);
+            Controls.Add(listBoxStrecken);
             Controls.Add(btn_Search);
             Name = "MainView";
             Text = "MainView";
+            ((System.ComponentModel.ISupportInitialize)dataGrdViewStrecken).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button btn_Search;
-        private ListBox listBox1;
+        private ListBox listBoxStrecken;
         private Button btn_loadData;
         private Button btn_edit;
         private Button btn_delete;
+        private Button btn_details;
+        private ContextMenuStrip contextMenuStrip1;
+        private Button btn_Add;
+        private DataGridView dataGrdViewStrecken;
     }
 }
