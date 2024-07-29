@@ -76,7 +76,7 @@ namespace RadMangerForm.View
             // Spalten hinzufügen
             dataGrdViewStrecken.Columns.Add("ID", "ID");
             dataGrdViewStrecken.Columns.Add("Name", "Name");
-            dataGrdViewStrecken.Columns.Add("Entfernung", "Entfernung");
+            dataGrdViewStrecken.Columns.Add("Entfernung", "Länge in Km");
             dataGrdViewStrecken.Columns.Add("Schwierigkeit", "Schwierigkeit");
             
 
@@ -105,27 +105,36 @@ namespace RadMangerForm.View
 
             DataGridViewRow selectedRow = dataGrdViewStrecken.SelectedRows[0];
 
-            string strecknID = selectedRow.Cells["ID"].Value.ToString();    
-            string name = selectedRow.Cells["Name"].Value.ToString();
-            string entfernung = selectedRow.Cells["Entfernung"].Value.ToString();
-            int schwierigkeit = Convert.ToInt32(selectedRow.Cells["Schwierigkeit"].Value);
-            //TimeSpan dauer = TimeSpan.Zero;
-            //if (selectedRow.Cells["Dauer"].Value != null && TimeSpan.TryParse(selectedRow.Cells["Dauer"].Value.ToString(), out TimeSpan parsedDauer))
-            //{
-            //    dauer = parsedDauer;
-            //}
-
-
-            Strecke selectedStrecke = new Strecke
+            if(selectedRow.Cells["ID"].Value != null)
             {
-                StreckenID = Convert.ToInt32(strecknID),
-                Name = name,
-                Länge = Convert.ToInt32(entfernung),
-                Schwierigkeitsgrad = schwierigkeit,
-                //Dauer = dauer
-            };
+                string strecknID = selectedRow.Cells["ID"].Value.ToString();
+                string name = selectedRow.Cells["Name"].Value.ToString();
+                string entfernung = selectedRow.Cells["Entfernung"].Value.ToString();
+                int schwierigkeit = Convert.ToInt32(selectedRow.Cells["Schwierigkeit"].Value);
+                //TimeSpan dauer = TimeSpan.Zero;
+                //if (selectedRow.Cells["Dauer"].Value != null && TimeSpan.TryParse(selectedRow.Cells["Dauer"].Value.ToString(), out TimeSpan parsedDauer))
+                //{
+                //    dauer = parsedDauer;
+                //}
 
-            return selectedStrecke;
+
+                Strecke selectedStrecke = new Strecke
+                {
+                    StreckenID = Convert.ToInt32(strecknID),
+                    Name = name,
+                    Länge = Convert.ToInt32(entfernung),
+                    Schwierigkeitsgrad = schwierigkeit,
+                    //Dauer = dauer
+                };
+                return selectedStrecke;
+            }
+            else
+            {
+                MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
+                return null;
+            }         
+
+            
         }
 
         public void ShowStreckeDetails(Strecke strecke)

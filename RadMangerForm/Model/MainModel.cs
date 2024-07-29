@@ -61,6 +61,51 @@ namespace RadMangerForm.Model
             return strecken;
         }
         /// <summary>
+        /// Loads a Strecke by its Id
+        /// </summary>
+        /// <param name="streckenId"></param>
+        /// <returns></returns>
+        public Strecke LoadStreckeById(int? streckenId)
+        {
+            if(streckenId == null)
+            {
+                return null;
+            }
+            string query = "SELECT StreckenID, Name, Länge, Dauer, Schwierigkeitsgrad, TrinkbrunnenID, BelagID, BundeslandID FROM Strecken WHERE StreckenID = @StreckenID";
+
+            Strecke strecke = null;
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open(); // Verbindung aufbauen
+
+                using (MySqlCommand command = new MySqlCommand(query, connection)) // SQL-Befehl senden
+                {
+                    command.Parameters.AddWithValue("@StreckenID", streckenId); // Parameter hinzufügen
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            strecke = new Strecke
+                            {
+                                StreckenID = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Länge = reader.GetInt32(2),
+                                Dauer = reader.GetTimeSpan(3),
+                                Schwierigkeitsgrad = reader.GetInt32(4),
+                                TrinkbrunnenID = reader.IsDBNull(5) ? (int?)null : reader.GetInt32(5),
+                                BelagID = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6),
+                                BundeslandID = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7)
+                            };
+                        }
+                    }
+                }
+            }
+
+            return strecke;
+        }
+        /// <summary>
         /// Adds a new Strecke to the database
         /// </summary>
         /// <param name="neueStrecke"></param>
@@ -87,6 +132,7 @@ namespace RadMangerForm.Model
                 }
             }
         }
+
 
         public void SearchButtonClicked()
         {

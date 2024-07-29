@@ -28,32 +28,34 @@ namespace RadMangerForm.Presenter
         private void OnDeleteButtonClicked(object? sender, EventArgs e)
         {
             Strecke selectedStrecke = _mainView.GetSelectedStrecke();
-
+           
 
             if (selectedStrecke != null)
             {
                 _mainModel.DeleteStrecke(selectedStrecke.StreckenID);
                 OnLoadButtonClicked(this, EventArgs.Empty);
             }
-            else
-            {
-                MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
-            }
+            
         }
 
         private void OnDetailsButtonClicked(object? sender, EventArgs e)
         {
 
-            Strecke selectedStrecke = _mainView.GetSelectedStrecke();            
-
+            Strecke selectedStrecke = _mainView.GetSelectedStrecke();
             if(selectedStrecke != null)
             {
-                DetailPresenter detailPresenter = new DetailPresenter(selectedStrecke);
+                Strecke streckeAllData = _mainModel.LoadStreckeById(selectedStrecke.StreckenID);
+
+                if (streckeAllData != null)
+                {
+                    DetailPresenter detailPresenter = new DetailPresenter(streckeAllData);
+                }
+                else
+                {
+                    MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
+                }
             }
-            else
-            {
-                MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
-            }          
+                  
         }
 
         private void OnSearchButtonClicked(object sender, EventArgs e)
@@ -85,27 +87,28 @@ namespace RadMangerForm.Presenter
 
             // Angenommen, Sie haben eine Möglichkeit, die ID der ausgewählten Strecke zu erhalten
             Strecke selectedStrecke = _mainView.GetSelectedStrecke();
-
-           
-
             if(selectedStrecke != null)
             {
+                Strecke streckeAllData = _mainModel.LoadStreckeById(selectedStrecke.StreckenID);
 
-                int? selectedStreckeId = selectedStrecke.StreckenID;
 
-                List<Bundesland> bundesländer = _mainModel.GetBundesländer();
-
-                AddView addView = new AddView(bundesländer)
+                if (streckeAllData != null)
                 {
-                    selectedStrecke = selectedStrecke
-                };
-                addView.SaveButtonClicked += OnSaveButtonClicked;
-                addView.ShowDialog();
+                    List<Bundesland> bundesländer = _mainModel.GetBundesländer();
+
+                    AddView addView = new AddView(bundesländer)
+                    {
+                        selectedStrecke = streckeAllData
+                    };
+                    addView.SaveButtonClicked += OnSaveButtonClicked;
+                    addView.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
+                }
             }
-            else
-            {
-                MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
-            }
+         
 
         }
 
