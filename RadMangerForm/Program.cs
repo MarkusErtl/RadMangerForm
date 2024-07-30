@@ -20,8 +20,9 @@ namespace RadMangerForm
 
             MySqlCommand command = connection.CreateCommand();
 
-            //InsertData(command);
-
+            // --- Default Data -----------
+           //InsertData(command);
+            // --------------------------
             connection.Close();
 
 
@@ -83,16 +84,19 @@ namespace RadMangerForm
                     (1, 'Asphalt', 'Gut'),
                     (2, 'Schotter', 'Mittel'),
                     (3, 'Kopfsteinpflaster', 'Schlecht');
+                   
 
                     INSERT INTO Koordinaten (KoordinatenID, Breitengrad, Längengrad) VALUES
-                    (1, 48, 11),
+                    (1, 0, 0),
                     (2, 52, 13),
-                    (3, 50, 8);
+                    (3, 50, 8),
+                    (4, 55, 9);
 
                     INSERT INTO Trinkbrunnen (TrinkbrunnenID, Name, Funktionsfähig, Bewertung, Zustand, KoordinatenID) VALUES
                     (1, 'Brunnen am Marktplatz', 1, 5, 'Sehr gut', 1),
-                    (2, 'Brunnen im Park', 1, 4, 'Gut', 2),
-                    (3, 'Brunnen am Rhein', 0, 2, 'Schlecht', 3);
+                    (2, 'Brunnen am Marktplatz2', 2, 4, 'Sehr gut', 1),
+                    (3, 'Brunnen im Park', 1, 4, 'Gut', 2),
+                    (4, 'Brunnen am Rhein', 0, 2, 'Schlecht', 3);
 
                     INSERT INTO ZOT_Strecke_Trinkbrunnen (StreckenID, TrinkbrunnenID) VALUES
                     (1, 1),
