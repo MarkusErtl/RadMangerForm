@@ -35,14 +35,15 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             btn_Add = new Button();
             dataGrdViewStrecken = new DataGridView();
+            txt_Search = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGrdViewStrecken).BeginInit();
             SuspendLayout();
             // 
             // btn_Search
             // 
-            btn_Search.Location = new Point(458, 30);
+            btn_Search.Location = new Point(458, 39);
             btn_Search.Name = "btn_Search";
-            btn_Search.Size = new Size(85, 39);
+            btn_Search.Size = new Size(85, 25);
             btn_Search.TabIndex = 0;
             btn_Search.Text = "Search";
             btn_Search.UseVisualStyleBackColor = true;
@@ -114,11 +115,21 @@
             dataGrdViewStrecken.CellContentClick += dataGrdViewStrecken_CellContentClick;
             dataGrdViewStrecken.SelectionChanged += dataGrdViewStrecken_SelectionChanged;
             // 
+            // txt_Search
+            // 
+            txt_Search.Location = new Point(340, 39);
+            txt_Search.Name = "txt_Search";
+            txt_Search.Size = new Size(115, 23);
+            txt_Search.TabIndex = 8;
+            txt_Search.TextChanged += txt_Search_TextChanged;
+            txt_Search.KeyPress += txt_Search_KeyPress;
+            // 
             // MainView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 454);
+            ClientSize = new Size(693, 455);
+            Controls.Add(txt_Search);
             Controls.Add(dataGrdViewStrecken);
             Controls.Add(btn_Add);
             Controls.Add(btn_details);
@@ -130,6 +141,7 @@
             Text = "MainView";
             ((System.ComponentModel.ISupportInitialize)dataGrdViewStrecken).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -142,5 +154,6 @@
         private ContextMenuStrip contextMenuStrip1;
         private Button btn_Add;
         private DataGridView dataGrdViewStrecken;
+        private TextBox txt_Search;
     }
 }

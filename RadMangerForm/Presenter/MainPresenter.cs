@@ -12,9 +12,11 @@ namespace RadMangerForm.Presenter
 
         public MainPresenter(MainView mainView, MainModel mainModel)
         {
+            // Set the view and model
             _mainView = mainView;
             _mainModel = mainModel;
 
+            // Subscribe to the events of the view
             _mainView.LoadButtonClicked += OnLoadButtonClicked;
             _mainView.SearchButtonClicked += OnSearchButtonClicked;
             _mainView.DetailButtonClicked += OnDetailsButtonClicked;
@@ -25,6 +27,11 @@ namespace RadMangerForm.Presenter
              _mainView.DeleteButtonClicked += OnDeleteButtonClicked;
         }
 
+        /// <summary>
+        /// Es wurde auf den Löschen-Button geklickt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDeleteButtonClicked(object? sender, EventArgs e)
         {
             Strecke selectedStrecke = _mainView.GetSelectedStrecke();
@@ -38,6 +45,11 @@ namespace RadMangerForm.Presenter
             
         }
 
+        /// <summary>
+        /// Es wurde auf den Details-Button geklickt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDetailsButtonClicked(object? sender, EventArgs e)
         {
 
@@ -58,12 +70,25 @@ namespace RadMangerForm.Presenter
                   
         }
 
+        /// <summary>
+        /// Der Search -Button wurde geklickt um nach einer Strecke zu suchen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSearchButtonClicked(object sender, EventArgs e)
-        {
-            // Do something
-            _mainModel.SearchButtonClicked();
+        {  
+
+            string userInput = _mainView.GetUserInput();
+            List<Strecke> strecke = _mainModel.SearchButtonClicked( userInput);
+            _mainView.UpdateStreckenList(strecke);
         }
 
+
+        /// <summary>
+        /// Der Load -Button wurde geklickt um alle Strecken zu laden
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnLoadButtonClicked(object sender, EventArgs e)
         {
             // Laden aller Daten zum Hineinladen in die ListBox
@@ -72,6 +97,11 @@ namespace RadMangerForm.Presenter
         }
 
 
+        /// <summary>
+        /// Der Add -Button wurde geklickt um eine neue Strecke hinzuzufügen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnAddButtonClicked(object sender, EventArgs e)
         {
             //Liste von Bundesländern laden
@@ -80,8 +110,13 @@ namespace RadMangerForm.Presenter
             AddView addView = new AddView(bundesländer);
             addView.SaveButtonClicked += OnSaveButtonClicked;
             addView.ShowDialog();
-
         }
+
+        /// <summary>
+        /// Der Edit -Button wurde geklickt um eine Strecke zu bearbeiten
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnEditButtonClicked(object sender, EventArgs e)
         {
 
@@ -107,11 +142,14 @@ namespace RadMangerForm.Presenter
                 {
                     MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
                 }
-            }
-         
-
+            } 
         }
 
+        /// <summary>
+        /// Speichert die Änderungen an der Strecke
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSaveButtonClicked(object? sender, EventArgs e)
         {
             AddView addView = sender as AddView;
@@ -133,7 +171,6 @@ namespace RadMangerForm.Presenter
                 }
             }
         }
-
 
     }
 }

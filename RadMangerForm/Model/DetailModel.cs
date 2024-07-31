@@ -13,6 +13,7 @@ namespace RadMangerForm.Model
 
     public class DetailModel
     {
+        // Connection string for the database
         string _connectionString = "server=localhost;database=RadManager;uid=root;pwd=radmanager";
 
 
@@ -21,7 +22,11 @@ namespace RadMangerForm.Model
                 
         }
 
-
+        /// <summary>
+        /// This method loads the details of a Strecke from the database.
+        /// </summary>
+        /// <param name="streckenId"></param>
+        /// <returns></returns>
         public Strecke GetStreckeDetails(int? streckenId)
         {
             Strecke strecke = null;
@@ -62,6 +67,11 @@ namespace RadMangerForm.Model
             return strecke;
         }
 
+        /// <summary>
+        /// This method gets the details of a Belag from the database.
+        /// </summary>
+        /// <param name="belagId"></param>
+        /// <returns></returns>
         public Belag GetBelagDetails(int? belagId)
         {
             if (!belagId.HasValue)
@@ -104,6 +114,12 @@ namespace RadMangerForm.Model
             }            
         }
 
+        /// <summary>
+        /// Gets the details of a Trinkbrunnen from the database.
+        /// </summary>
+        /// <param name="trinkbrunnenId"></param>
+        /// <param name="streckenId"></param>
+        /// <returns></returns>
         public List<Trinkbrunnen> GetTrinkbrunnenDetails(int? trinkbrunnenId, int? streckenId)
         {
             List<Trinkbrunnen> trinkbrunnenList = new List<Trinkbrunnen>();
@@ -161,6 +177,11 @@ namespace RadMangerForm.Model
             return trinkbrunnenList;
         }
 
+        /// <summary>
+        /// Gets the details of a Koordinaten from the database.With the help of the KoordinatenID
+        /// </summary>
+        /// <param name="koorindatenId"></param>
+        /// <returns></returns>
         public Koordinaten GetKoordinaten(int koorindatenId)
         {
             Koordinaten koordinaten = null;
@@ -301,11 +322,11 @@ namespace RadMangerForm.Model
             }
         }
 
-/// <summary>
-/// Methode zum Löschen eines Trinkbrunnens aus der Datenbank
-/// </summary>
-/// <param name="trinkbrunnenId"></param>
-/// <exception cref="Exception"></exception>
+        /// <summary>
+        /// Methode zum Löschen eines Trinkbrunnens aus der Datenbank
+        /// </summary>
+        /// <param name="trinkbrunnenId"></param>
+        /// <exception cref="Exception"></exception>
         public void DeleteTrinkbrunnen(int? trinkbrunnenId)
         {
             if(!trinkbrunnenId.HasValue)
@@ -359,6 +380,13 @@ namespace RadMangerForm.Model
            
         }
 
+        /// <summary>
+        /// The method UpdateBelag updates the Belag data in the database.
+        /// </summary>
+        /// <param name="belag"></param>
+        /// <param name="selectedStrecke"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exception"></exception>
         public void UpdateBelag(Belag belag, Strecke selectedStrecke)
         {
             if (belag == null)
@@ -390,23 +418,28 @@ namespace RadMangerForm.Model
             }
         }
 
+        /// <summary>
+        /// GetBundesländerByID gets the Bundesland data from the database.Only the BundeslandID is required.
+        /// </summary>
+        /// <param name="streckenID"></param>
+        /// <returns></returns>
         public Bundesland GetBundesländerByID(int? streckenID)
         {
             string query = @"
-        SELECT 
-            b.BundeslandID, 
-            b.Name, 
-            b.PersonenID, 
-            b.StreckenID, 
-            b.Hauptstadt, 
-            b.Einwohnerzahl, 
-            b.Fläche 
-        FROM 
-            Bundesland b
-        JOIN 
-            Strecken s ON b.BundeslandID = s.BundeslandID
-        WHERE 
-            s.StreckenID = @streckenID";
+            SELECT 
+                b.BundeslandID, 
+                b.Name, 
+                b.PersonenID, 
+                b.StreckenID, 
+                b.Hauptstadt, 
+                b.Einwohnerzahl, 
+                b.Fläche 
+            FROM 
+                Bundesland b
+            JOIN 
+                Strecken s ON b.BundeslandID = s.BundeslandID
+            WHERE 
+                s.StreckenID = @streckenID";
 
             Bundesland bundesland = null;
 

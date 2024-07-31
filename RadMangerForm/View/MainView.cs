@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RadMangerForm.Presenter;
 using Org.BouncyCastle.Utilities;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RadMangerForm.View
 {
@@ -78,12 +79,12 @@ namespace RadMangerForm.View
             dataGrdViewStrecken.Columns.Add("Name", "Name");
             dataGrdViewStrecken.Columns.Add("Entfernung", "Länge in Km");
             dataGrdViewStrecken.Columns.Add("Schwierigkeit", "Schwierigkeit");
-            
+
 
             // Daten hinzufügen
             foreach (var strecke in strecken)
             {
-                dataGrdViewStrecken.Rows.Add(strecke.StreckenID,strecke.Name, strecke.Länge, strecke.Schwierigkeitsgrad);
+                dataGrdViewStrecken.Rows.Add(strecke.StreckenID, strecke.Name, strecke.Länge, strecke.Schwierigkeitsgrad);
             }
         }
 
@@ -96,7 +97,7 @@ namespace RadMangerForm.View
         /// Methode um die ausgewählte Strecke aus dem DataGridView zu holen
         /// </summary>
         /// <returns></returns>
-        public Strecke GetSelectedStrecke() 
+        public Strecke GetSelectedStrecke()
         {
             if (dataGrdViewStrecken.SelectedRows.Count == 0)
             {
@@ -105,7 +106,7 @@ namespace RadMangerForm.View
 
             DataGridViewRow selectedRow = dataGrdViewStrecken.SelectedRows[0];
 
-            if(selectedRow.Cells["ID"].Value != null)
+            if (selectedRow.Cells["ID"].Value != null)
             {
                 string strecknID = selectedRow.Cells["ID"].Value.ToString();
                 string name = selectedRow.Cells["Name"].Value.ToString();
@@ -132,9 +133,9 @@ namespace RadMangerForm.View
             {
                 MessageBox.Show("Bitte wählen Sie eine Strecke aus.");
                 return null;
-            }         
+            }
 
-            
+
         }
 
         public void ShowStreckeDetails(Strecke strecke)
@@ -164,6 +165,36 @@ namespace RadMangerForm.View
         private void dataGrdViewStrecken_SelectionChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txt_Search_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        public string GetUserInput()
+        {
+            if (txt_Search.Text.Length > 0 && txt_Search.Text != null && txt_Search.Text.Length < 10)
+            {
+                txt_Search.Text = txt_Search.Text.Trim();
+                return txt_Search.Text;
+            }
+            else
+            {
+                MessageBox.Show("Bitte geben Sie einen Suchbegriff ein.");
+                return null;
+            }
+        }
+        
+
+        private void txt_Search_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Überprüfen, ob der eingegebene Key ein Buchstabe ist
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+            {
+                // Wenn der eingegebene Key kein Buchstabe oder Steuerzeichen ist, abbrechen
+                e.Handled = true;
+            }
         }
     }
 }

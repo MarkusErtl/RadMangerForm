@@ -17,7 +17,7 @@ namespace RadMangerForm.View
         public Trinkbrunnen _trinkbrunnen { get; set; }
 
 
-       public event EventHandler<EventArgs> SaveButtonClicked;
+        public event EventHandler<EventArgs> SaveButtonClicked;
 
         public bool IsEditMode => _trinkbrunnen != null && _trinkbrunnen.TrinkbrunnenID.HasValue;
 
@@ -36,7 +36,7 @@ namespace RadMangerForm.View
                 LoadTrinkbrunnenData(_trinkbrunnen);
                 this.Text = "Trinkbrunnen Bearbeiten";
                 btn_save.Text = "Aktualisieren";
-               lbl_title.Text = "Trinkbrunnen Bearbeiten";
+                lbl_title.Text = "Trinkbrunnen Bearbeiten";
             }
             else
             {
@@ -52,7 +52,7 @@ namespace RadMangerForm.View
             {
                 txt_Name.Text = trinkbrunnen.Name;
 
-                if(trinkbrunnen.Funktionsfähig == true)
+                if (trinkbrunnen.Funktionsfähig == true)
                 {
                     combo_funktionsfähig.Text = "Ja";
                 }
@@ -63,14 +63,14 @@ namespace RadMangerForm.View
 
                 combo_bewertung.Text = trinkbrunnen.Bewertung.ToString();
                 combo_zustand.Text = trinkbrunnen.Zustand;
-               
+
             }
 
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            SaveButtonClicked?.Invoke(this, EventArgs.Empty);          
+            SaveButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         enum Bewertung
@@ -79,7 +79,7 @@ namespace RadMangerForm.View
             Gut,
             Akzeptabel,
             Mangehlhaft,
-            Nicht_trinkbar            
+            Nicht_trinkbar
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace RadMangerForm.View
             {
                 errors += "Zustand darf nicht leer sein.\n";
             }
-                      
+
 
             if (!string.IsNullOrEmpty(errors))
             {
@@ -130,5 +130,9 @@ namespace RadMangerForm.View
             return trinkbrunnen;
         }
 
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

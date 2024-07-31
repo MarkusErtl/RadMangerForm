@@ -16,9 +16,8 @@ namespace RadMangerForm.Model
         string _connectionString = "server=localhost;database=RadManager;uid=root;pwd=radmanager";
 
 
-        public MainModel()
+        public MainModel() //ctor is empty
         {
-
         }
 
         /// <summary>
@@ -133,10 +132,51 @@ namespace RadMangerForm.Model
             }
         }
 
-
-        public void SearchButtonClicked()
+        /// <summary>
+        /// This method is called when the search button is clicked. It searches for a Strecke by its name
+        /// </summary>
+        /// <param name="userInput"></param>
+        /// <returns></returns>
+        public List<Strecke> SearchButtonClicked(string userInput)
         {
-            // Do something
+            string query = "SELECT StreckenID, Name, Länge, Dauer, Schwierigkeitsgrad, TrinkbrunnenID, BelagID, BundeslandID " +
+                "FROM Strecken " +
+                "WHERE Name " +
+                "LIKE @Name";
+
+            List<Strecke> strecken = new List<Strecke>();
+
+            using (MySqlConnection connection = new MySqlConnection(_connectionString))
+            {
+                connection.Open(); // Verbindung aufbauen     
+
+                using (MySqlCommand command = new MySqlCommand(query, connection)) // SQL-Befehl senden
+                {
+                    // Parameter hinzufügen, um SQL-Injection zu vermeiden
+                    command.Parameters.AddWithValue("@Name", userInput + "%"); //hier das % Zeichen ist für die Suche nach dem Anfang des Namens
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Strecke strecke = new Strecke
+                            {
+                                StreckenID = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Länge = reader.GetInt32(2),
+                                Dauer = reader.GetTimeSpan(3),
+                                Schwierigkeitsgrad = reader.GetInt32(4),
+                                TrinkbrunnenID = reader.IsDBNull(5) ? (int?)null : reader.GetInt32(5),
+                                BelagID = reader.IsDBNull(6) ? (int?)null : reader.GetInt32(6),
+                                BundeslandID = reader.IsDBNull(7) ? (int?)null : reader.GetInt32(7)
+                            };
+                            strecken.Add(strecke);
+                        }
+                    }
+                }
+            }
+
+            return strecken;
         }
         /// <summary>
         /// Delets a Strecke from the database
@@ -212,49 +252,54 @@ namespace RadMangerForm.Model
            
             }
         }
-        public static void LoadData()
-        {
-            string connectionString = "server=localhost;user id=root;password=;database=radmanager";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
+        //public static void LoadData()
+        //{
+        //    string connectionString = "server=localhost;user id=root;password=;database=radmanager";
 
-                MySqlCommand command = connection.CreateCommand();
+        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        connection.Open();
 
-                // Abfrage für alle Tabellen
-                string[] tables = { "Bundesland", "Person", "Fahrrad", "Strecken", "Belag", "Koordinaten", "Trinkbrunnen", "ZOT_Strecke_Trinkbrunnen" };
+        //        MySqlCommand command = connection.CreateCommand();
 
-                foreach (string table in tables)
-                {
-                    command.CommandText = $"SELECT * FROM {table}";
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        Console.WriteLine($"Table: {table}");
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            Console.Write(reader.GetName(i) + "\t");
-                        }
-                        Console.WriteLine();
+        //        // Abfrage für alle Tabellen
+        //        string[] tables = { "Bundesland", "Person", "Fahrrad", "Strecken", "Belag", "Koordinaten", "Trinkbrunnen", "ZOT_Strecke_Trinkbrunnen" };
 
-                        while (reader.Read())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                Console.Write(reader[i] + "\t");
-                            }
-                            Console.WriteLine();
-                        }
-                        Console.WriteLine();
-                    }
-                }
+        //        foreach (string table in tables)
+        //        {
+        //            command.CommandText = $"SELECT * FROM {table}";
+        //            using (MySqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                Console.WriteLine($"Table: {table}");
+        //                for (int i = 0; i < reader.FieldCount; i++)
+        //                {
+        //                    Console.Write(reader.GetName(i) + "\t");
+        //                }
+        //                Console.WriteLine();
 
-                // Verbindung schließen
-                connection.Close();
-            }
+        //                while (reader.Read())
+        //                {
+        //                    for (int i = 0; i < reader.FieldCount; i++)
+        //                    {
+        //                        Console.Write(reader[i] + "\t");
+        //                    }
+        //                    Console.WriteLine();
+        //                }
+        //                Console.WriteLine();
+        //            }
+        //        }
+
+        //        // Verbindung schließen
+        //        connection.Close();
+        //    }
             
-        }
+        //}
 
+        /// <summary>
+        /// This method is called when the load button is clicked. It loads all Bundesländer from the database
+        /// </summary>
+        /// <returns></returns>
         public List<Bundesland> GetBundesländer()
         {
             string query = "SELECT BundeslandID, Name, PersonenID, StreckenID, Hauptstadt, Einwohnerzahl, Fläche FROM Bundesland";

@@ -16,13 +16,12 @@ namespace RadMangerForm.Presenter
     {
         private DetailModel _detailModel;
         private IDetailView _streckeDetailsView;
-        private Strecke _selectedStrecke;
-
-        
+        private Strecke _selectedStrecke;        
        
 
         public DetailPresenter(Strecke selectedStrecke)
         {
+            // detaulModel und streckeDetailsView werden instanziiert
             DetailModel detailModel = new DetailModel();
             StreckeDetailsView streckeDetailsView = new StreckeDetailsView(selectedStrecke);
 
@@ -31,29 +30,34 @@ namespace RadMangerForm.Presenter
             
             _selectedStrecke = selectedStrecke;
 
+            //Eventhandler für die Buttons
             _streckeDetailsView.AddButtonClicked += OnAddButtonClicked;
             _streckeDetailsView.EditButtonClicked += OnEditButtonClicked;
             _streckeDetailsView.DeleteButtonClicked += OnDeleteButtonClicked;
             _streckeDetailsView.BelagEditButtonClicked += OnBelagEditButtonClicked;
-
             _streckeDetailsView.CloseButtonClicked += OnCloseButtonClicked;
 
-
-            LoadDetails();
-
-            ////direkt methode im Model die die Daten holt
-            //GetStreckeDetails(selectedStrecke.StreckenID);
-           
-            //GetTrinkbrunnenDetails(selectedStrecke.TrinkbrunnenID);
-
-           
+            //Laden der Details
+            LoadDetails();     
 
         }
+
+        /// <summary>
+        /// Schließt das Detailfenster
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnCloseButtonClicked(object sender, EventArgs e)
         {
             _streckeDetailsView.Close();
         }
 
+
+        /// <summary>
+        /// Es wird ein neuer Trinkbrunnen hinzugefügt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnAddButtonClicked(object sender, EventArgs e)
         {
             Trink_editAdd trink_EditAdd = new Trink_editAdd()
@@ -67,6 +71,11 @@ namespace RadMangerForm.Presenter
 
         }
 
+        /// <summary>
+        /// Es wird ein Trinkbrunnen bearbeitet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnEditButtonClicked(object sender, EventArgs e)
         {
             Trinkbrunnen selcetedTrinkbrunnen = _streckeDetailsView.GetSelectedTrinkbrunnen();
@@ -91,12 +100,16 @@ namespace RadMangerForm.Presenter
 
         }
 
+        /// <summary>
+        /// Speichert die Änderungen am Trinkbrunnen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSaveButtonClicked (object sender, EventArgs e)
         {
             Trink_editAdd trink_EditAdd = (Trink_editAdd)sender;
 
-            Trinkbrunnen trinkbrunnen = trink_EditAdd.GetTrinkbrunnenDetails();
-        
+            Trinkbrunnen trinkbrunnen = trink_EditAdd.GetTrinkbrunnenDetails();        
 
             if (trinkbrunnen != null)
             {
@@ -111,6 +124,12 @@ namespace RadMangerForm.Presenter
             LoadDetails();
         }
 
+
+        /// <summary>
+        /// Es wurde auf den Belag bearbeiten Button geklickt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBelagEditButtonClicked(object sender, EventArgs e)
         {
             Belag_edit belag_Edit = new Belag_edit()
@@ -121,6 +140,12 @@ namespace RadMangerForm.Presenter
             belag_Edit.ShowDialog(); 
         }
 
+
+        /// <summary>
+        /// Es wurd im Belagfenster auf den Speichern Button geklickt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onBelagSaveButtonClicked(object sender, EventArgs e)
         {
             var belagDetails = _detailModel.GetBelagDetails(_selectedStrecke.BelagID);
@@ -145,6 +170,11 @@ namespace RadMangerForm.Presenter
         }   
 
 
+        /// <summary>
+        /// Es wird ein Trinkbrunnen gelöscht
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDeleteButtonClicked(object sender, EventArgs e)
         {
             Trinkbrunnen selcetedTrinkbrunnen = _streckeDetailsView.GetSelectedTrinkbrunnen();
@@ -152,17 +182,17 @@ namespace RadMangerForm.Presenter
             {
                _detailModel.DeleteTrinkbrunnen(selcetedTrinkbrunnen.TrinkbrunnenID);
                 LoadDetails();
-
-
-
             }
             else
             {
                 MessageBox.Show("Bitte wählen Sie einen Trinkbrunnen aus.");
             }
-
         }
 
+
+        /// <summary>
+        /// Mit dieser Methode werden die Details der Strecke geladen. Es wird die Strecke, der Belag, die Bundesländer und die Trinkbrunnen geladen
+        /// </summary>
         private void LoadDetails()
         {
             var streckeDetails = _detailModel.GetStreckeDetails(_selectedStrecke.StreckenID);
@@ -195,7 +225,7 @@ namespace RadMangerForm.Presenter
             }
         }
 
-        public void GetStreckeDetails(int streckenId)
+        /*public void GetStreckeDetails(int streckenId)
         {
             Strecke streckeDetails = _detailModel.GetStreckeDetails(streckenId);
 
@@ -208,34 +238,30 @@ namespace RadMangerForm.Presenter
             {
                 MessageBox.Show("Details für die ausgewählte Strecke konnten nicht abgerufen werden.");
             }
-        }
+        } */
 
-        public void GetTrinkbrunnenDetails(int trinkbrunnenId)
-        {
-            if(trinkbrunnenId != 0)
-            {
-                List<Trinkbrunnen> trinkbrunnenDetails = _detailModel.GetTrinkbrunnenDetails(trinkbrunnenId, _selectedStrecke.StreckenID);
+        //public void GetTrinkbrunnenDetails(int trinkbrunnenId)
+        //{
+        //    if(trinkbrunnenId != 0)
+        //    {
+        //        List<Trinkbrunnen> trinkbrunnenDetails = _detailModel.GetTrinkbrunnenDetails(trinkbrunnenId, _selectedStrecke.StreckenID);
 
-                if (trinkbrunnenDetails != null)
-                {
-                    _streckeDetailsView.DisplayTrinkbrunnenDetails(trinkbrunnenDetails);
-                    _streckeDetailsView.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("Es wurden keine Informationen zum Trinkbrunnen gefunden");
-                }
-            }
-            else
-            {                 
-                MessageBox.Show("Es gibt keine Trinkbrunnen für diese Strecke");
-            }
-          
-        }
+        //        if (trinkbrunnenDetails != null)
+        //        {
+        //            _streckeDetailsView.DisplayTrinkbrunnenDetails(trinkbrunnenDetails);
+        //            _streckeDetailsView.ShowDialog();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Es wurden keine Informationen zum Trinkbrunnen gefunden");
+        //        }
+        //    }
+        //    else
+        //    {                 
+        //        MessageBox.Show("Es gibt keine Trinkbrunnen für diese Strecke");
+        //    }
 
-        
-
-
+        //}
 
 
     }
